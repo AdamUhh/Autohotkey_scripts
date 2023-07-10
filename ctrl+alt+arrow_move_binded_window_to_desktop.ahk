@@ -136,6 +136,18 @@ ListBindedWindows() {
     return
 }
 
+UnbindAllWindows() {
+    static MyWindowArray := Init()
+
+    for Key, Val in MyWindowArray
+        if (Val)
+            MyWindowArray[Key] := 0
+
+    PleasantNotify("Unbinded All Windows", "" , 245, 100, "vc t", "0.5")
+
+    return        
+}
+
 return
 
 ; Note: If you are confused why 3 desktops are being created,
@@ -151,7 +163,10 @@ return
 ; Ctrl + Alt + B
 ^!B::ToggleWindowBind()
    
-; Ctrl + Alt + LShift B
+; Ctrl + Alt + LShift + B
 ^!<+B::ListBindedWindows()
+   
+; Ctrl + Alt + LShift + U
+^!<+U::UnbindAllWindows()
    
 
