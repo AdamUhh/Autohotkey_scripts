@@ -67,7 +67,7 @@ MoveLeft() {
     }
 
     if (moved)
-        PleasantNotify("Switched Desktop", "Changed to desktop: " n , 245, 100, "vc t", "0.5")
+        PleasantNotify("Switched Desktop", "Changed to desktop: " n , 305, 100, "vc t", "0.5")
 
     WinActivate active ;once in a while it's not active
 }
@@ -95,7 +95,7 @@ MoveRight() {
     }
 
     if (moved)
-        PleasantNotify("Switched Desktop", "Changed to desktop: " n , 245, 100, "vc t", "0.5")
+        PleasantNotify("Switched Desktop", "Changed to desktop: " n , 305, 100, "vc t", "0.5")
 
     WinActivate active
 }
@@ -108,12 +108,12 @@ ToggleWindowBind() {
 
     if (IsObject(MyWindowArray[active])) {
         MyWindowArray[active] := 0
-        PleasantNotify("Unbinded Window", title , 245, 100, "vc t", "0.5")
+        PleasantNotify("Unbinded Window", title , 305, 100, "vc t", "0.5")
         return
     }
     else {
         MyWindowArray[active] := {ID: active, TITLE: title}
-        PleasantNotify("Binded Window", title , 245, 100, "vc t", "0.5")
+        PleasantNotify("Binded Window", title , 305, 100, "vc t", "0.5")
         return
     }
 }
@@ -138,12 +138,16 @@ ListBindedWindows() {
 
 UnbindAllWindows() {
     static MyWindowArray := Init()
-
+    isUnbinded := false
     for Key, Val in MyWindowArray
-        if (Val)
+        if (Val) {
             MyWindowArray[Key] := 0
-
-    PleasantNotify("Unbinded All Windows", "" , 245, 100, "vc t", "0.5")
+            isUnbinded := true
+        }
+    if (isUnbinded)
+        PleasantNotify("Unbinded All Windows", "" , 305, 100, "vc t", "0.5")
+    else
+        PleasantNotify("Nothing to Unbind", "" , 305, 100, "vc t", "0.5")
 
     return        
 }
