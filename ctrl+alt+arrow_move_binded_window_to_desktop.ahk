@@ -59,7 +59,8 @@ MoveLeft() {
         ; if there is an object in MyWindowArray with a key matching the window title
         ; move the window to the position stored by that object
         if (IsObject(MyWindowArray[winId])) {
-            n -= 1
+            if (!moved)
+                n -= 1
             VD.MoveWindowToDesktopNum(MyWindowArray[winId].ID,n), VD.goToDesktopNum(n)
             moved := true
         }
@@ -86,7 +87,8 @@ MoveRight() {
         ; if there is an object in MyWindowArray with a key matching the window title
         ; move the window to the position stored by that object
         if (IsObject(MyWindowArray[winId])) {
-            n += 1
+            if (!moved)
+                n += 1
             VD.MoveWindowToDesktopNum(MyWindowArray[winId].ID,n), VD.goToDesktopNum(n)
             moved := true
         }
