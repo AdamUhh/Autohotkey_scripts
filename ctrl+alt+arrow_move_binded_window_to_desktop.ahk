@@ -65,11 +65,15 @@ MoveLeft() {
             moved := true
         }
     }
+    if (!moved) and (MyWindowArray.Count() > 0) {
+        UnbindAllWindows()
+    }
+
+    WinActivate active ;once in a while it's not active
 
     if (moved)
         PleasantNotify("Switched Desktop", "Changed to desktop: " n , 305, 100, "vc t", "0.5")
 
-    WinActivate active ;once in a while it's not active
 }
 
 MoveRight() {
@@ -94,10 +98,15 @@ MoveRight() {
         }
     }
 
+    if (!moved) and (MyWindowArray.Count() > 0) {
+        UnbindAllWindows(true)
+    }
+
+    WinActivate active
+
     if (moved)
         PleasantNotify("Switched Desktop", "Changed to desktop: " n , 305, 100, "vc t", "0.5")
 
-    WinActivate active
 }
 
 ToggleWindowBind() {
@@ -107,7 +116,7 @@ ToggleWindowBind() {
     active := "ahk_id" WinExist("A")
 
     if (IsObject(MyWindowArray[active])) {
-        MyWindowArray[active] := 0
+        MyWindowArray[active] := ""
         PleasantNotify("Unbinded Window", title , 305, 100, "vc t", "0.5")
         return
     }
@@ -136,16 +145,26 @@ ListBindedWindows() {
     return
 }
 
-UnbindAllWindows() {
+UnbindAllWindows(deletedWindow = false) {
     static MyWindowArray := Init()
     isUnbinded := false
     for Key, Val in MyWindowArray
         if (Val) {
-            MyWindowArray[Key] := 0
-            isUnbinded := true
+            ; Below Delete are not required anymore since the below Remove is doing the work
+            ; Source: https://www.autohotkey.com/board/topic/90734-method-to-delete-object/
+            ; MyWindowArray[Key] := ""
+            ; MyWindowArray.Delete(Key)
+            isUnbinded := true ; Keep this to signify that there was Keys beforehand
         }
-    if (isUnbinded)
+    MyWindowArray.Remove("", Chr(255))
+    MyWindowArray.SetCapacity(0)
+    if (isUnbinded) {
+        if (deletedWindow) {
+        PleasantNotify("Could not find any windows", "Unbinding all windows" , 375, 100, "vc t", "0.5")
+        } else {
         PleasantNotify("Unbinded All Windows", "" , 305, 100, "vc t", "0.5")
+        }
+    }
     else
         PleasantNotify("Nothing to Unbind", "" , 305, 100, "vc t", "0.5")
 
