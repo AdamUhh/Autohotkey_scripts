@@ -21,4 +21,3 @@ Please note that I added `#NoTrayIcon` to all scripts, as I am (temporarily?) us
 - Also, if using AHKScriptHub, please note that you need to add a `SetProductName` and `SetDescription` if you want to compile, like the below example:
   - ;@Ahk2Exe-SetProductName AhkScriptHub
   - ;@Ahk2Exe-SetDescription A script to view and control all other scripts
-
