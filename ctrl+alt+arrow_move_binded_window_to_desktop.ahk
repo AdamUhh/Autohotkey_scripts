@@ -20,11 +20,11 @@ SetWinDelay -1
 SetControlDelay -1
 
 ;include the library
-#Include VD.ahk
+#Include %A_ScriptDir%\VD.ahk\VD.ahk
 ; VD.init() ;COMMENT OUT `static dummyStatic1 := VD.init()` if you don't want to init at start of script
 
 ; ? Include notification library
-#Include PleasantNotify.ahk
+#Include %A_ScriptDir%\NotificationGUIs\PleasantNotify.ahk
 
 ;you should WinHide invisible programs that have a window.
 WinHide, % "Malwarebytes Tray Application"

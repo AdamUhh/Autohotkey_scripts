@@ -18,11 +18,11 @@ SetWinDelay -1
 SetControlDelay -1
 
 ;include the library
-#Include VD.ahk
+#Include %A_ScriptDir%\VD.ahk\VD.ahk
 ; VD.init() ;COMMENT OUT `static dummyStatic1 := VD.init()` if you don't want to init at start of script
 
 ; ? Include notification library
-#Include PleasantNotify.ahk
+#Include %A_ScriptDir%\NotificationGUIs\PleasantNotify.ahk
 
 ;you should WinHide invisible programs that have a window.
 WinHide, % "Malwarebytes Tray Application"
@@ -32,7 +32,7 @@ VD.createUntil(3) ; create desktops until we have at least 3 VD
 
 return
 
-; Win + LShift + Page Up 
+; Win + LShift + Page Up
 #<+PgUp::
     n := VD.getCurrentDesktopNum()
     if n = 1 ;at begining, can't go left
@@ -48,7 +48,7 @@ Return
 ; Note: If you are confused why 3 desktops are being created,
 ; Look above -> VD.createUntil(3)
 
-; Win + LShift + Page Down 
+; Win + LShift + Page Down
 #<+PgDn::
     n := VD.getCurrentDesktopNum()
     if n = % VD.getCount() ;at end, can't go right

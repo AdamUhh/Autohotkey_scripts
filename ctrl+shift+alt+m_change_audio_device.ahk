@@ -7,7 +7,9 @@
 #SingleInstance force
 #NoTrayIcon
 
-List := EnumAudioEndpoints()
+#Include %A_ScriptDir%\NotificationGUIs\WiseGUI.ahk
+
+List := EnumAudioEndpoints() ; List of Audio Endpoints
 
 ; ? Initially used to show the EXACT names of the IO devices
 ; Devices := ""
@@ -27,10 +29,13 @@ selectedDevice := 2
         if (selectedDevice = 1) {
             SetDefaultEndpoint(GetDeviceID(List, Device2))
             selectedDevice := 2
+            WiseGui( "Info" , "Margins: 4,4,-3,3", "MainText: Switched to Headphones" , "Move: , 10" ,"TextWidth: 155" , "Timer: 1000")
+
         }
         else {
             SetDefaultEndpoint(GetDeviceID(List, Device1))
             selectedDevice := 1
+            WiseGui( "Info" , "Margins: 4,4,-3,3", "MainText: Switched to Speakers", "Move: , 10", "TextWidth: 155" ,"Timer: 1000")
         }
         ; SetDefaultEndpoint(GetDeviceID(List, "Microphone (Realtek(R) Audio)")) ; ? Microphone (I don't need to change this)
 
