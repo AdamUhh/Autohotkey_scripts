@@ -12,9 +12,13 @@ Additionally, the above scripts also need to be placed in the root of VD.AHK
 
 ### Note 2
 
-Please note that I added `#NoTrayIcon` to all scripts, as I am (temporarily?) using `AHKScriptHub` as a master hub (to control all scripts in one place)
+- Please note that I added `#NoTrayIcon` to all scripts, as I am using `MonitorAHKScripts` as a master hub (to control all .ahk scripts in one place)
+- Unfortunately this script only shows .ahk processes and not .exe (ahk) scripts,
+  - Due to this I have stopped compiling my scripts in order to use `MonitorAHKScripts`
 
-### AHKScriptHub References
+### Depreciated/No Longer In Use
+
+#### AHKScriptHub References
 
 - <https://www.the-automator.com/easily-edit-pause-reload-open-folder-for-any-running-ahk-script-works-w-o-system-tray-icon-with-ahkscripthub/>
 - <https://www.youtube.com/watch?v=hdpJebygFxk>
