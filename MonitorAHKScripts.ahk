@@ -151,11 +151,12 @@ ProcessDelete_OnObjectReady(obj) {
 
 ;=========================================
 
-~LAlt & Space::
-	Gosub, LVRun
-	Gui,1: Show
-return
-Esc:: Gui,1: Hide
+; ? Press LAlt and Spacebar to show GUI
+; ~LAlt & Space::
+; 	Gosub, LVRun
+; 	Gui,1: Show
+; return
+; Esc:: Gui,1: Hide
 
 show_ListView:
 	Gui,1: Default
@@ -198,7 +199,8 @@ show_ListView:
 	GuiControl, Hide, onTop1
 	WonTop:=0
 
-	Gui,1: Show, w520 h530 , AHK process list
+	; ? Enable this to show GUI on startup
+	;Gui,1: Show, w520 h530 , AHK process list
 
 	IniRead, read_1, %settings_ini%, Misc, Last list
 	if(read_1=="ERROR" || read_1=="")
