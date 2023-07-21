@@ -7,17 +7,17 @@
 #NoEnv ; Recommended for performance and compatibility with future AutoHotkey releases.
 #SingleInstance force
 #NoTrayIcon
-ListLines Off
-SetBatchLines -1
-SendMode Input ; Recommended for new scripts due to its superior speed and reliability.
-SetWorkingDir %A_ScriptDir% ; Ensures a consistent starting directory.
-#KeyHistory 0
+ListLines, Off
+SetBatchLines, -1 ; Use SetBatchLines -1 to never sleep (i.e. have the script run at maximum speed). The default setting is 10m
+SendMode, Input ; Recommended for new scripts due to its superior speed and reliability.
+SetWorkingDir, %A_ScriptDir% ; Ensures a consistent starting directory.
+#KeyHistory, 0
 #WinActivateForce
 
 Process, Priority,, H
 
-SetWinDelay -1
-SetControlDelay -1
+SetWinDelay, -1 ; Sets the delay that will occur after each windowing command, such as WinActivate.
+SetControlDelay, -1 ; A short delay (sleep) is done automatically after every Control command that changes a control, namely Control, ControlMove, ControlClick, ControlFocus, and ControlSetText (ControlSend uses SetKeyDelay).
 
 ;include the library
 #Include %A_ScriptDir%\VD.ahk\VD.ahk
@@ -46,10 +46,14 @@ Init() {
 }
 
 MoveLeft() {
+    Notify("Moving Left", n, 0.5, "GC=F0F8FF TC=194499 MC=194499 GR=0 BR=0 TF=Segoe UI MF=Segoe UI TS=10 MS=10 TW=625 MW=625 IW=38 IH=38 Image=" 222)
+
     static MyWindowArray := Init()
     n := VD.getCurrentDesktopNum()
-    if n = 1 ;at begining, can't go left
+    if (n = 1) { ;at beginning, can't go left
+        Notify("Can't go left anymore", "Max Desktop Reached: " n, 0.5, "GC=F0F8FF TC=194499 MC=194499 GR=0 BR=0 TF=Segoe UI MF=Segoe UI TS=10 MS=10 TW=625 MW=625 IW=38 IH=38 Image=" 222)
         Return
+    }
 
     WinGet, Win, List
     Loop, % Win {
@@ -67,21 +71,24 @@ MoveLeft() {
     }
     if (!moved) and (MyWindowArray.Count() > 0) {
         UnbindAllWindows()
+        return
     }
 
-    WinActivate active ;once in a while it's not active
-
-    if (moved)
+    if (moved) {
         Notify("Switched Desktop (Bind)","Changed to desktop: " n, 0.5, "GC=F0F8FF TC=194499 MC=194499 GR=0 BR=0 TF=Segoe UI MF=Segoe UI TS=10 MS=10 TW=625 MW=625 IW=38 IH=38 Image=" 222)
-
+        ; WinActivate active ;once in a while it's not active
+    }
+    return
 }
 
 MoveRight() {
     static MyWindowArray := Init()
     moved := false
     n := VD.getCurrentDesktopNum()
-    if n = % VD.getCount() ;at end, can't go right
+    if (n = VD.getCount()) { ;at end, can't go right
+        Notify("Can't go right anymore", "Max Desktop Reached: " n, 0.5, "GC=F0F8FF TC=194499 MC=194499 GR=0 BR=0 TF=Segoe UI MF=Segoe UI TS=10 MS=10 TW=625 MW=625 IW=38 IH=38 Image=" 222)
         Return
+    }
 
     WinGet, Win, List
     Loop, % Win {
@@ -100,13 +107,14 @@ MoveRight() {
 
     if (!moved) and (MyWindowArray.Count() > 0) {
         UnbindAllWindows(true)
+        return
     }
 
-    WinActivate active
-
-    if (moved)
+    if (moved){
         Notify("Switched Desktop (Bind)","Changed to desktop: " n, 0.5, "GC=F0F8FF TC=194499 MC=194499 GR=0 BR=0 TF=Segoe UI MF=Segoe UI TS=10 MS=10 TW=625 MW=625 IW=38 IH=38 Image=" 222)
-
+        ; WinActivate active ;once in a while it's not active
+    }
+    return
 }
 
 ToggleWindowBind() {
@@ -118,13 +126,11 @@ ToggleWindowBind() {
     if (IsObject(MyWindowArray[active])) {
         MyWindowArray[active] := ""
         Notify("Unbinded Window", title, 0.5, "GC=F0F8FF TC=194499 MC=194499 GR=0 BR=0 TF=Segoe UI MF=Segoe UI TS=10 MS=10 TW=625 MW=625 IW=38 IH=38 Image=" 222)
-
         return
     }
     else {
         MyWindowArray[active] := {ID: active, TITLE: title}
         Notify("Binded Window", title, 0.5, "GC=F0F8FF TC=194499 MC=194499 GR=0 BR=0 TF=Segoe UI MF=Segoe UI TS=10 MS=10 TW=625 MW=625 IW=38 IH=38 Image=" 222)
-
         return
     }
 }
@@ -152,7 +158,7 @@ UnbindAllWindows(deletedWindow = false) {
     isUnbinded := false
     for Key, Val in MyWindowArray
         if (Val) {
-            ; Below Delete are not required anymore since the below Remove is doing the work
+            ; Below .Delete are not required anymore since the below .Remove is doing the work
             ; Source: https://www.autohotkey.com/board/topic/90734-method-to-delete-object/
             ; MyWindowArray[Key] := ""
             ; MyWindowArray.Delete(Key)
