@@ -24,7 +24,7 @@ SetControlDelay -1
 ; VD.init() ;COMMENT OUT `static dummyStatic1 := VD.init()` if you don't want to init at start of script
 
 ; ? Include notification library
-#Include %A_ScriptDir%\NotificationGUIs\PleasantNotify.ahk
+#Include %A_ScriptDir%\NotificationGUIs\Notify.ahk
 
 ;you should WinHide invisible programs that have a window.
 WinHide, % "Malwarebytes Tray Application"
@@ -38,13 +38,12 @@ VD.createUntil(3) ; create desktops until we have at least 3 VD
  * 	All functions share the same object.
  */
 Init() {
-	static MyWindowArray
-	if (!IsObject(MyWindowArray)) {
-		MyWindowArray := {}
-	}
-	return MyWindowArray
+    static MyWindowArray
+    if (!IsObject(MyWindowArray)) {
+        MyWindowArray := {}
+    }
+    return MyWindowArray
 }
-
 
 MoveLeft() {
     static MyWindowArray := Init()
@@ -52,7 +51,7 @@ MoveLeft() {
     if n = 1 ;at begining, can't go left
         Return
 
-   WinGet, Win, List
+    WinGet, Win, List
     Loop, % Win {
 
         winId := "ahk_id" Win%A_Index%
@@ -73,7 +72,7 @@ MoveLeft() {
     WinActivate active ;once in a while it's not active
 
     if (moved)
-        PleasantNotify("Switched Desktop", "Changed to desktop: " n , 305, 100, "vc t", "0.5")
+        Notify("Switched Desktop (Bind)","Changed to desktop: " n, 0.5, "GC=F0F8FF TC=194499 MC=194499 GR=0 BR=0 TF=Segoe UI MF=Segoe UI TS=10 MS=10 TW=625 MW=625 IW=38 IH=38 Image=" 222)
 
 }
 
@@ -106,7 +105,7 @@ MoveRight() {
     WinActivate active
 
     if (moved)
-        PleasantNotify("Switched Desktop", "Changed to desktop: " n , 305, 100, "vc t", "0.5")
+        Notify("Switched Desktop (Bind)","Changed to desktop: " n, 0.5, "GC=F0F8FF TC=194499 MC=194499 GR=0 BR=0 TF=Segoe UI MF=Segoe UI TS=10 MS=10 TW=625 MW=625 IW=38 IH=38 Image=" 222)
 
 }
 
@@ -118,12 +117,14 @@ ToggleWindowBind() {
 
     if (IsObject(MyWindowArray[active])) {
         MyWindowArray[active] := ""
-        PleasantNotify("Unbinded Window", title , 305, 100, "vc t", "0.5")
+        Notify("Unbinded Window", title, 0.5, "GC=F0F8FF TC=194499 MC=194499 GR=0 BR=0 TF=Segoe UI MF=Segoe UI TS=10 MS=10 TW=625 MW=625 IW=38 IH=38 Image=" 222)
+
         return
     }
     else {
         MyWindowArray[active] := {ID: active, TITLE: title}
-        PleasantNotify("Binded Window", title , 305, 100, "vc t", "0.5")
+        Notify("Binded Window", title, 0.5, "GC=F0F8FF TC=194499 MC=194499 GR=0 BR=0 TF=Segoe UI MF=Segoe UI TS=10 MS=10 TW=625 MW=625 IW=38 IH=38 Image=" 222)
+
         return
     }
 }
@@ -133,15 +134,15 @@ ListBindedWindows() {
     Value_Array := []
     for Key, Val in MyWindowArray
         if (Val)
-           Value_Array.Push(MyWindowArray[Key].TITLE)
+            Value_Array.Push(MyWindowArray[Key].TITLE)
 
     if (Value_Array.Length() = 0) {
         MsgBox, % "No Binded Windows"
         return
-    } else 
+    } else
         for Key, Val in Value_Array
             List .= Key "`t" Val "`n"
-                MsgBox, % List
+    MsgBox, % List
 
     return
 }
@@ -161,15 +162,17 @@ UnbindAllWindows(deletedWindow = false) {
     MyWindowArray.SetCapacity(0)
     if (isUnbinded) {
         if (deletedWindow) {
-        PleasantNotify("Could not find any windows", "Unbinding all windows" , 375, 100, "vc t", "0.5")
+            Notify("Could not find any windows", "Unbinding all windows", 0.5, "GC=F0F8FF TC=194499 MC=194499 GR=0 BR=0 TF=Segoe UI MF=Segoe UI TS=10 MS=10 TW=625 MW=625 IW=38 IH=38 Image=" 222)
+
         } else {
-        PleasantNotify("Unbinded All Windows", "" , 305, 100, "vc t", "0.5")
+            Notify("Unbinded All Windows",, 0.5, "GC=F0F8FF TC=194499 MC=194499 GR=0 BR=0 TF=Segoe UI MF=Segoe UI TS=10 MS=10 TW=625 MW=625 IW=38 IH=38 Image=" 222)
+
         }
     }
     else
-        PleasantNotify("Nothing to Unbind", "" , 305, 100, "vc t", "0.5")
+        Notify("Nothing to Unbind",, 0.5, "GC=F0F8FF TC=194499 MC=194499 GR=0 BR=0 TF=Segoe UI MF=Segoe UI TS=10 MS=10 TW=625 MW=625 IW=38 IH=38 Image=" 222)
 
-    return        
+    return
 }
 
 return
@@ -177,20 +180,18 @@ return
 ; Note: If you are confused why 3 desktops are being created,
 ; Look above -> VD.createUntil(3)
 
-
 ; Ctrl + Alt + Arrow Left
 ^!Left::MoveLeft()
-   
+
 ; Ctrl + Alt + Arrow Right
 ^!Right::MoveRight()
-   
+
 ; Ctrl + Alt + B
 ^!B::ToggleWindowBind()
-   
+
 ; Ctrl + Alt + LShift + B
 ^!<+B::ListBindedWindows()
-   
+
 ; Ctrl + Alt + LShift + U
 ^!<+U::UnbindAllWindows()
-   
 

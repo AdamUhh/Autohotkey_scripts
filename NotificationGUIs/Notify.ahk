@@ -26,13 +26,42 @@ SetWorkingDir, %A_ScriptDir%
 ;           "Wait=ID"   to wait for a notification
 ;           "Update=ID" to change Title, Message, and Progress Bar (with 'Duration')
 ;
+; GF := 50       ;      Gui First Number  ;= override Gui: # used
+; GL := 74       ;      Gui Last Number   ;= between GF and GL
+; GC := "FFFFAA" ;      Gui Color         ;   ie: don't use GF<=Gui#<=GL
+; GR := 9        ;      Gui Radius        ;       elsewhere in your script
+; GT := "Off"    ;      Gui Transparency
+; TS := 8        ;      Title Font Size
+; TW := 625      ;      Title Font Weight
+; TC := "Black"  ;      Title Font Color
+; TF := "Arial"  ;      Title Font Face
+; MS := 8        ;      Message Font Size
+; MW := 550      ;      Message Font Weight
+; MC := "Black"  ;      Message Font Color
+; MF := "Arial"  ;      Message Font Face
+; BC := "000000" ;      Border Colors
+; BW := 2        ;      Border Width/Thickness
+; BR := 13       ;      Border Radius
+; BT := 105      ;      Border Transpacency
+; BF := 150      ;      Border Flash Speed
+; SI := 350      ;      Speed In (AnimateWindow)
+; SC := 100      ;      Speed Clicked (AnimateWindow)
+; ST := 450      ;      Speed TimeOut (AnimateWindow)
+; IW := 32       ;      Image Width
+; IH := 32       ;      Image Height
+; IN := 0        ;      Image Icon Number (from Image)
+; AX := 0        ;      Action X Close Button (maybe add yes/no ok/cancel, etc...)
+; PW := 350	     ;      Progress bar width
+; PC := "Default";      Progress bar color
+; PB := "Default";      Progress bar background color
+;
 ; Return   ID (Gui Number used)
 ;          0 if failed (too many open most likely)
 ;          VarValue if Options includes: Return=VarName
 ;——————————————————————————————————————————————————————
 
-;Notify("Title", "message",-3, "Style=Tooltip")
-;Notify("Title", "message",-3, "Style=balloontip")
+;Notify("Title", "message",1, "Style=Tooltip")
+;Notify("Title", "message",1, "Style=balloontip")
 
 Notify(Title="Notify()",Message="",Duration="",Options="")
 {
@@ -253,13 +282,19 @@ Else
     If Title <> ; title text control added next, if used
     {
         Gui, %GN%:Font, w%TW_% s%TS_% c%TC_%, %TF_%
-        Gui, %GN%:Add, Text, %ImageOptions% BackgroundTrans v_Title_, % Title
+        ; Aligns title to center if no Message
+        If ((Title) && (!Message))
+            Gui, %GN%:Add, Text, xp+48 yp+10 BackgroundTrans v_Title_, % Title
+        Else
+            Gui, %GN%:Add, Text, %ImageOptions% BackgroundTrans v_Title_, % Title
+
     }
     If PG ; then the progress bar, if called for
         Gui, %GN%:Add, Progress, Range0-%PG% %wPW% %hPH% c%PC_% Background%PB_% v_Progress_
     Else
         If ((Title) && (Message)) ; some spacing tweaks if both used
             Gui, %GN%:Margin, , -5
+
     If Message <> ; and finally the message text control if used
     {
         Gui, %GN%:Font, w%MW_% s%MS_% c%MC_%, %MF_%
@@ -286,13 +321,25 @@ Else
         WinSet, Transparent, % GT_ ; will be addressed someday, leaving it in
 
     SysGet, Workspace, MonitorWorkArea ; positioning
-    NewX := WorkSpaceRight-GW-5
+    ; NewX := WorkSpaceRight-GW-5
+    NewX := WorkSpaceRight-(GW/2)-(WorkSpaceRight/2) ; Sets X position to center of screen
     If (OtherY)
-        NewY := OtherY-GH-2-BW_*2
+        ; If there is already a notification, it will push the new notification up
+        ; NewY := OtherY-GH-2-BW_*2
+
+        ; If there is already a notification, it will push the new notification down
+        NewY := OtherY+GH+2+BW_*2
     Else
-        NewY := WorkspaceBottom-GH-5
+        ; Makes it bottom of screen
+        ; NewY := WorkspaceBottom-GH-5
+        ; Makes it top of screen
+        ; Adding the number is necessary if you want to have notifications popping below
+        ; Otherwise, remove it and it simply (display) as if it replaced it instead
+        NewY := WorkspaceTop+15
     If NewY < % WorkspaceTop
-        NewY := WorkspaceBottom-GH-5
+        ; Look above for comments on whats happening
+        ; NewY := WorkspaceBottom-GH-5
+        NewY := WorkspaceTop+15
 
     Gui, %GN2%:-Caption +ToolWindow +AlwaysOnTop -Border +E0x20 ; border gui
     Gui, %GN2%:Color, %BC_%

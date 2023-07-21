@@ -22,7 +22,7 @@ SetControlDelay -1
 ; VD.init() ;COMMENT OUT `static dummyStatic1 := VD.init()` if you don't want to init at start of script
 
 ; ? Include notification library
-#Include %A_ScriptDir%\NotificationGUIs\PleasantNotify.ahk
+#Include %A_ScriptDir%\NotificationGUIs\Notify.ahk
 
 ;you should WinHide invisible programs that have a window.
 WinHide, % "Malwarebytes Tray Application"
@@ -41,7 +41,8 @@ return
     n -= 1
     active := "ahk_id" WinExist("A")
     VD.MoveWindowToDesktopNum(active,n), VD.goToDesktopNum(n)
-    PleasantNotify("Switched Desktop", "Changed to desktop: " n , 245, 100, "vc t", "0.5")
+    Notify("Switched Desktop",, 0.5, "GC=F0F8FF TC=194499 MC=194499 GR=0 BR=0 TF=Segoe UI MF=Segoe UI TS=10 MS=10 TW=625 MW=625 IW=38 IH=38 Image=" 222)
+    ; Notify("Switched Desktop","Changed to desktop: " n, 0.5, "GC=F0F8FF TC=194499 MC=194499 GR=0 BR=0 TF=Segoe UI MF=Segoe UI TS=10 MS=10 TW=625 MW=625 IW=38 IH=38 Image=" 222)
     WinActivate active ;once in a while it's not active
 Return
 
@@ -57,6 +58,7 @@ Return
     n += 1
     active := "ahk_id" WinExist("A")
     VD.MoveWindowToDesktopNum(active,n), VD.goToDesktopNum(n)
-    PleasantNotify("Switched Desktop", "Changed to desktop: " n , 245, 100, "vc t", "0.5")
+    Notify("Switched Desktop","Changed to desktop: " n, 0.5, "GC=F0F8FF TC=194499 MC=194499 GR=0 BR=0 TF=Segoe UI MF=Segoe UI TS=10 MS=10 TW=625 MW=625 IW=38 IH=38 Image=" 222)
+
     WinActivate active
 Return
