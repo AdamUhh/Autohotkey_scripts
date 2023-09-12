@@ -7,6 +7,7 @@
 - `Ctrl + Alt + T` : Open Terminal (cmd)
 - `Middle Click` : Middle clicking on the titlebar of a window/applications sends it to the back
 - `Ctrl + Shift + Alt + M` : Switch Audio Device (Will require you to edit script in order to add your own I/O device names)
+- `Shift + Alt + ArrowLeft/ArrowRight` : Rewind/Seek Non-Focused Youtube Video by 10 seconds (works best when currently focused in an IDE)
 - `Windows + ~` : Switch to another similar window/application
 - `Windows + Shift + PageUp/PageDown` : Moves active window to another Windows Desktop
 - `Windows + Shift + B` (Binds Window) -> `Windows + Alt + ArrowLeft/ArrowRight` : Moves binded windows/applications (can bind multiple) to another Windows Desktop
