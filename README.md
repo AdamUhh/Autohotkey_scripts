@@ -7,7 +7,7 @@
 - `Ctrl + Alt + T` : Open Terminal (cmd)
 - `Middle Click` : Middle clicking on the titlebar of a window/applications sends it to the back
 - `Ctrl + Shift + Alt + M` : Switch Audio Device (Will require you to edit script in order to add your own I/O device names)
-- `Ctrl + Space` : Media Contro, Toggles Player (Pause/Unpause)
+- `Ctrl + Space` : Media Control, Toggles Player (Pause/Unpause)
 - `Shift + Alt + ArrowLeft/ArrowRight` : Rewind/Seek Non-Focused Youtube Video by 10 seconds (works best when currently focused in an IDE)
 - `Windows + ~` : Switch to another similar window/application
 - `Windows + Shift + PageUp/PageDown` : Moves active window to another Windows Desktop
@@ -16,12 +16,12 @@
   - `Windows + Shift + Alt + U`: Unbinds all windows/applications
   - (This script sometimes bugs out, requiring users to release and hold hotkeys again to get it to move binded windows)
 
-## Installation
+~~## Installation~~
 
-VD.AHK (<https://github.com/FuPeiJiang/VD.ahk>) is required for the below ahk scripts to work (simply put the folder 'VD.ahk' in same folder as all other scripts)
+~~VD.AHK (<https://github.com/FuPeiJiang/VD.ahk>) is required for the below ahk scripts to work (simply put the folder 'VD.ahk' in same folder as all other scripts)~~
 
-- win+shift+page_move_window_to_desktop.ahk
-- ctrl+alt+arrow_move_binded_window_to_desktop.ahk
+- ~~win+shift+page_move_window_to_desktop.ahk~~
+- ~~ctrl+alt+arrow_move_binded_window_to_desktop.ahk~~
 
 ### Note
 
