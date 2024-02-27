@@ -78,9 +78,9 @@ class VD {
             this._dll_GetName:=this._dll_GetName_Win11
             this.RegisterDesktopNotifications:=this.RegisterDesktopNotifications_Win11
         } else {
-            ; Win11 after breaking changes made at build 22621.2215
-            IID_IVirtualDesktopManagerInternal_:="{A3175F2D-239C-4BD2-8AA0-EEBA8B0B138E}"
-            IID_IVirtualDesktop_:="{3F07F4BE-B107-441A-AF0F-39D82529072C}"
+            ; Win11
+            IID_IVirtualDesktopManagerInternal_:="{4970BA3D-FD4E-4647-BEA3-D89076EF4B9C}" ;https://github.com/MScholtes/VirtualDesktop/blob/812c321e286b82a10f8050755c94d21c4b69812f/VirtualDesktop11.cs#L163-L185
+            IID_IVirtualDesktop_:="{3F07F4BE-B107-441A-AF0F-39D82529072C}" ;https://github.com/MScholtes/VirtualDesktop/blob/812c321e286b82a10f8050755c94d21c4b69812f/VirtualDesktop11.cs#L149-L150
             ;conditionally assign method to method
             this._dll_GetCurrentDesktop:=this._dll_GetCurrentDesktop_Win_Default
             this._dll_GetDesktops:=this._dll_GetDesktops_Win_Default
@@ -132,9 +132,13 @@ class VD {
             this.Ptr_RemoveDesktop := this._vtable(this.IVirtualDesktopManagerInternal, 13) ; void RemoveDesktop(IVirtualDesktop desktop, IVirtualDesktop fallback);
             this.FindDesktop := this._vtable(this.IVirtualDesktopManagerInternal, 14) ; IVirtualDesktop FindDesktop(ref Guid desktopid);
         } else {
-            this.GetDesktops := this._vtable(this.IVirtualDesktopManagerInternal, 7) ; void GetDesktops(out IObjectArray desktops);
-            this.Ptr_CreateDesktop := this._vtable(this.IVirtualDesktopManagerInternal, 11) ; IVirtualDesktop CreateDesktop(IntPtr hWndOrMon);
-            this.Ptr_RemoveDesktop := this._vtable(this.IVirtualDesktopManagerInternal, 13) ; void RemoveDesktop(IVirtualDesktop desktop, IVirtualDesktop fallback);
+            ; this.GetAllCurrentDesktops := this._vtable(this.IVirtualDesktopManagerInternal, 6) ; IObjectArray GetAllCurrentDesktops();
+            this.GetDesktops := this._vtable(this.IVirtualDesktopManagerInternal, 7) ; void GetDesktops(IntPtr hWndOrMon, out IObjectArray desktops);
+            ; this.GetAdjacentDesktop := this._vtable(this.IVirtualDesktopManagerInternal, 8) ; int GetAdjacentDesktop(IVirtualDesktop from, int direction, out IVirtualDesktop desktop);
+            ; this.SwitchDesktop := this._vtable(this.IVirtualDesktopManagerInternal, 9) ; void SwitchDesktop(IntPtr hWndOrMon, IVirtualDesktop desktop);
+            this.Ptr_CreateDesktop := this._vtable(this.IVirtualDesktopManagerInternal, 10) ; IVirtualDesktop CreateDesktop(IntPtr hWndOrMon);
+            ; this.MoveDesktop := this._vtable(this.IVirtualDesktopManagerInternal, 11) ; void MoveDesktop(IVirtualDesktop desktop, IntPtr hWndOrMon, int nIndex);
+            this.Ptr_RemoveDesktop := this._vtable(this.IVirtualDesktopManagerInternal, 12) ; void RemoveDesktop(IVirtualDesktop desktop, IVirtualDesktop fallback);
             this.FindDesktop := this._vtable(this.IVirtualDesktopManagerInternal, 13) ; IVirtualDesktop FindDesktop(ref Guid desktopid);
         }
 
@@ -183,7 +187,7 @@ class VD {
     }
     _dll_GetCurrentDesktop_Win11() {
         IVirtualDesktop_ofCurrentDesktop := 0
-        DllCall(this.GetCurrentDesktop, "UPtr", this.IVirtualDesktopManagerInternal, "Ptr", 0, "Ptr*", IVirtualDesktop_ofCurrentDesktop)
+        DllCall(this.GetCurrentDesktop, "UPtr", this.IVirtualDesktopManagerInternal, "Ptr*", IVirtualDesktop_ofCurrentDesktop)
         return IVirtualDesktop_ofCurrentDesktop
     }
     _dll_GetDesktops_Win_Default() {
@@ -193,7 +197,7 @@ class VD {
     }
     _dll_GetDesktops_Win11() {
         IObjectArray := 0
-        DllCall(this.GetDesktops, "UPtr", this.IVirtualDesktopManagerInternal, "Ptr", 0, "UPtr*", IObjectArray)
+        DllCall(this.GetDesktops, "UPtr", this.IVirtualDesktopManagerInternal, "Ptr*", IObjectArray)
         return IObjectArray
     }
     _dll_CreateDesktop_Win_Default() {
@@ -203,7 +207,7 @@ class VD {
     }
     _dll_CreateDesktop_Win11() {
         IVirtualDesktop_ofNewDesktop:=0
-        DllCall(this.Ptr_CreateDesktop, "UPtr", this.IVirtualDesktopManagerInternal, "Ptr", 0, "Ptr*", IVirtualDesktop_ofNewDesktop)
+        DllCall(this.Ptr_CreateDesktop, "UPtr", this.IVirtualDesktopManagerInternal, "Ptr*", IVirtualDesktop_ofNewDesktop)
         return IVirtualDesktop_ofNewDesktop
     }
     _dll_GetName_Win10(IVirtualDesktop) {
@@ -612,7 +616,7 @@ class VD {
         }
 
         str_IID_IUnknown:="{00000000-0000-0000-C000-000000000046}"
-        str_IID_IVirtualDesktopNotification:="{CD403E52-DEED-4C13-B437-B98380F2B1E8}"
+        str_IID_IVirtualDesktopNotification:="{B9E5E94D-233E-49AB-AF5C-2B4541C3AADE}"
 
         VarSetCapacity(someStr, 40*2)
         DllCall("Ole32\StringFromGUID2", "Ptr", riid, "Ptr",&someStr, "Ptr",40)
