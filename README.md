@@ -15,6 +15,7 @@
   - `Windows + Shift + Alt + B`: Lists all windows/applications
   - `Windows + Shift + Alt + U`: Unbinds all windows/applications
   - (This script sometimes bugs out, requiring users to release and hold hotkeys again to get it to move binded windows)
+- `Converts Capslock to Escape`: Only works when VSCode is the active window
 
 ~~## Installation~~
 
