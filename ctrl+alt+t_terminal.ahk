@@ -2,4 +2,4 @@
 #SingleInstance force
 #NoTrayIcon
 
-^!t:: Run "cmd", "C:\Users\Adam" 
+^!t:: run, cmd.exe, C:\Users\Adam
