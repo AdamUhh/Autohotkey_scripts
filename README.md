@@ -8,14 +8,16 @@
 - `Middle Click` : Middle clicking on the titlebar of a window/applications sends it to the back
 - `Ctrl + Shift + Alt + M` : Switch Audio Device (Will require you to edit script in order to add your own I/O device names)
 - `Ctrl + Space` : Media Control, Toggles Player (Pause/Unpause)
-- `Shift + Alt + ArrowLeft/ArrowRight` : Rewind/Seek Non-Focused Youtube Video by 10 seconds (works best when currently focused in an IDE)
+- `Shift + Alt + ArrowLeft/ArrowRight` : Rewind/Seek Non-Focused Youtube Video by 10 seconds (Only works for Chrome, and when currently focused in an IDE)
 - `Windows + ~` : Switch to another similar window/application
 - `Windows + Shift + PageUp/PageDown` : Moves active window to another Windows Desktop
 - `Windows + Shift + B` (Binds Window) -> `Windows + Alt + ArrowLeft/ArrowRight` : Moves binded windows/applications (can bind multiple) to another Windows Desktop
   - `Windows + Shift + Alt + B`: Lists all windows/applications
   - `Windows + Shift + Alt + U`: Unbinds all windows/applications
   - (This script sometimes bugs out, requiring users to release and hold hotkeys again to get it to move binded windows)
-- `Converts Capslock to Escape`: Only works when VSCode is the active window
+- `Capslock to Escape` 
+- `Colemak`: Converts keyboard layout to Colemak
+- `Num row to symbols`: Converts your top row numbers to its symbols, kums can be activated with shift
 
 ~~## Installation~~
 
