@@ -26,6 +26,8 @@ controlID       := 0
 
 return
 
+
+
 ;============================== Main Script ==============================
 #IfWinNotActive, ahk_exe chrome.exe
 
@@ -82,11 +84,13 @@ SeekYoutube(arrowKey) {
         ControlSend, Chrome_RenderWidgetHostHWND1, j , Google Chrome
     Else
         ControlSend, Chrome_RenderWidgetHostHWND1, l , Google Chrome
-    
+
     return
 }
 return
 
 #IfWinNotActive
 
+
 ;============================== End Script ==============================
+
