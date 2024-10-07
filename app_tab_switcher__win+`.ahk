@@ -27,15 +27,16 @@ DetectHiddenWindows, off ; if this is on it will show hidden windows from other 
 return
 ; **** END INIT ****
 
+; For some reason, ` (tilde) was not working on Win11, below forum for solution`
+; https://www.autohotkey.com/boards/viewtopic.php?t=23009
 
-
-; Alt + ` ->  Activate NEXT Window of same type (title checking) of the current APP
-#`::
-	switchToSameProcess()
+; Win + ` ->  Activate NEXT Window of same type (title checking) of the current APP
+#Sc029::
+	SwitchToSameProcess()
 return
 
-+#`::
-	switchToSameProcess(true)
++#Sc029::
+	SwitchToSameProcess(true)
 return
 
 
