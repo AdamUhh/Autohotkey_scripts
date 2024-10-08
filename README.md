@@ -15,28 +15,23 @@
   - `Windows + Shift + Alt + B`: Lists all windows/applications
   - `Windows + Shift + Alt + U`: Unbinds all windows/applications
   - (This script sometimes bugs out, requiring users to release and hold hotkeys again to get it to move binded windows)
-- `Capslock to Escape` 
+- `Capslock to Escape`
 - `Colemak`: Converts keyboard layout to Colemak
 - `Num row to symbols`: Converts your top row numbers to its symbols, kums can be activated with shift
-
-~~## Installation~~
-
-~~VD.AHK (<https://github.com/FuPeiJiang/VD.ahk>) is required for the below ahk scripts to work (simply put the folder 'VD.ahk' in same folder as all other scripts)~~
-
-- ~~win+shift+page_move_window_to_desktop.ahk~~
-- ~~ctrl+alt+arrow_move_binded_window_to_desktop.ahk~~
+- `Ctrl + Alt + F11`: Ensures that your window is always on top of all other windows, regardless of focus
 
 ### Note
 
 - Please note that I added `#NoTrayIcon` to all scripts, as I am using `MonitorAHKScripts` as a master hub (to control all .ahk scripts in one place)
-- Unfortunately this script only shows .ahk processes and not .exe (ahk) scripts,
-  - Due to this I have stopped compiling my scripts
+- Note: Unfortunately this script only shows .ahk processes and not .exe (ahk) scripts
 
-#### AHKScriptHub References
+### Irrelevant Info
 
-- Depreciated/No Longer using, in favour of MonitorAHKScripts
-  - <https://www.the-automator.com/easily-edit-pause-reload-open-folder-for-any-running-ahk-script-works-w-o-system-tray-icon-with-ahkscripthub/>
-  - <https://www.youtube.com/watch?v=hdpJebygFxk>
-  - Also, if using AHKScriptHub, please note that you need to add a `SetProductName` and `SetDescription` if you want to compile, like the below example:
-    - ;@Ahk2Exe-SetProductName AhkScriptHub
-    - ;@Ahk2Exe-SetDescription A script to view and control all other scripts
+Below is irrelevant as required file is included now in git folder
+
+#### Installation
+
+VD.AHK (<https://github.com/FuPeiJiang/VD.ahk>) is required for the below ahk scripts to work (simply put the folder 'VD.ahk' in same folder as all other scripts)
+
+- win+shift+page_move_window_to_desktop.ahk
+- ctrl+alt+arrow_move_binded_window_to_desktop.ahk
