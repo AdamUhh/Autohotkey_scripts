@@ -18,7 +18,8 @@ List := EnumAudioEndpoints() ; List of Audio Endpoints
 ; MsgBox(Devices)
 
 Device1 := "1 - LG HDR WFHD (AMD High Definition Audio Device)" ; ? My Speaker
-Device2 := "Realtek HD Audio 2nd output (Realtek(R) Audio)" ; ? My Headphones
+Device2 := "Speakers (Realtek(R) Audio)" ; ? My Headphones (Backside)
+; Device2 := "Realtek HD Audio 2nd output (Realtek(R) Audio)" ; ? My Headphones (Frontside)
 
 SetDefaultEndpoint(GetDeviceID(List, Device2)) ; ? Sets default device to headphones when it runs
 selectedDevice := 2
