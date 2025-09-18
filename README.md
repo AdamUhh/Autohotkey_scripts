@@ -14,7 +14,7 @@ A collection of AutoHotkey scripts I actively use on Windows 11, plus some archi
 | `Win + ~` | Switch to another similar window/application |
 | `Win + Shift + PageUp/PageDown` | Move active window to another Windows Desktop |
 
-*Note: To switch audio devices, first open the script and check the DEBUG comment for setup instructions.*
+*Note: To switch audio devices, first edit the script and check the DEBUG comment for setup instructions.*
 
 ---
 
