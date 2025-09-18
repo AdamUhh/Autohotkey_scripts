@@ -1,37 +1,56 @@
-# AHK scripts I actively use for Win 11
+# AHK Scripts for Windows 11  
 
-## How to use
+A collection of AutoHotkey scripts I actively use on Windows 11, plus some archived/unused ones that might still be useful.  
 
-- `Alt + E` : Open Downloads Folder
-- `Ctrl + Q` : Replicate `Alt + F4` to Close Applications (Works 95% of the time)
-- `Ctrl + Alt + T` : Open Terminal (cmd)
-- `Middle Click` : Middle clicking on the titlebar of a window/applications sends it to the back
-- `Ctrl + Shift + Alt + M` : Switch Audio Device (Will require you to edit script in order to add your own I/O device names)
-- `Ctrl + Space` : Media Control, Toggles Player (Pause/Unpause)
-- `Shift + Alt + ArrowLeft/ArrowRight` : Rewind/Seek Non-Focused Youtube Video by 10 seconds (Only works for Chrome, and when currently focused in an IDE)
-- `Windows + ~` : Switch to another similar window/application
-- `Windows + Shift + PageUp/PageDown` : Moves active window to another Windows Desktop
-- `Windows + Shift + B` (Binds Window) -> `Windows + Alt + ArrowLeft/ArrowRight` : Moves binded windows/applications (can bind multiple) to another Windows Desktop
-  - `Windows + Shift + Alt + B`: Lists all windows/applications
-  - `Windows + Shift + Alt + U`: Unbinds all windows/applications
-  - (This script sometimes bugs out, requiring users to release and hold hotkeys again to get it to move binded windows)
-- `Capslock to Escape`
-- `Colemak`: Converts keyboard layout to Colemak
-- `Num row to symbols`: Converts your top row numbers to its symbols, kums can be activated with shift
-- `Ctrl + Alt + F11`: Ensures that your window is always on top of all other windows, regardless of focus
+---
 
-### Note
+## Active Scripts  
 
-- Please note that I added `#NoTrayIcon` to all scripts, as I am using `MonitorAHKScripts` as a master hub (to control all .ahk scripts in one place)
-- Note: Unfortunately this script only shows .ahk processes and not .exe (ahk) scripts
+| Hotkey | Action |
+|--------|---------|
+| `Alt + E` | Open Downloads folder |
+| `Ctrl + Alt + T` | Open Terminal (PowerShell) |
+| `Ctrl + Shift + Alt + M` | Switch audio device *(requires editing script with your own I/O device names)* |
+| `Win + ~` | Switch to another similar window/application |
+| `Win + Shift + PageUp/PageDown` | Move active window to another Windows Desktop |
 
-### Irrelevant Info
+*Note: To switch audio devices, first open the script and check the DEBUG comment for setup instructions.*
 
-Below is irrelevant as required file is included now in git folder
+---
 
-#### Installation
+## Archived Scripts  
 
-VD.AHK (<https://github.com/FuPeiJiang/VD.ahk>) is required for the below ahk scripts to work (simply put the folder 'VD.ahk' in same folder as all other scripts)
+| Hotkey | Action |
+|--------|---------|
+| `Ctrl + Q` | Close applications (acts like `Alt + F4`, works ~95% of the time :P) |
+| `Middle Click (on title bar)` | Send window/application to the back |
+| `Ctrl + Space` | Media control (toggle pause/unpause) |
+| `Shift + Alt + ArrowLeft/Right` | Seek YouTube video by 10s (only works in Chrome + IDE focus) |
+| `Win + Shift + B` | Bind windows/apps for moving between desktops |
+| `Win + Alt + ArrowLeft/Right` | Move bound windows/apps between desktops |
+| `Win + Shift + Alt + B` | List all bound windows/apps |
+| `Win + Shift + Alt + U` | Unbind all windows/apps |
+| `CapsLock` | Remapped to `Escape` |
+| `Colemak` | Keyboard remapped to Colemak layout |
+| `Symbols` | Number row remapped to symbols (numbers via `Shift`) |
+| `Ctrl + Alt + F11` | Force window to always stay on top |
 
-- win+shift+page_move_window_to_desktop.ahk
-- ctrl+alt+arrow_move_binded_window_to_desktop.ahk
+*Note: The bind window script may bug out, so you may need to release and hold the hotkeys again)*  
+
+---
+
+## Notes  
+
+- Most scripts include `#NoTrayIcon`, since I use `MonitorAHKScripts.ahk` as a master hub to manage them.  
+- The monitor script only detects `.ahk` scripts, not compiled `.exe` versions.  
+
+---
+
+## 📦 Installation  
+
+Some scripts require [VD.AHK](https://github.com/FuPeiJiang/VD.ahk).  
+Simply place the `VD.ahk` folder in the same directory as the scripts below:  
+
+- `move_win_desktop-win+shift+pg.ahk`  
+- `move_binded_window_to_desktop-ctrl+alt+arrow.ahk`  
+

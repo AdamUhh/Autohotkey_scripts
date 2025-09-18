@@ -1,4 +1,6 @@
-﻿; ? Source: https://www.autohotkey.com/boards/viewtopic.php?t=55209
+﻿; ──────────────────────────────────────────────────────────────
+; Source: https://www.autohotkey.com/boards/viewtopic.php?t=55209
+; ──────────────────────────────────────────────────────────────
 
 help=
 (
