@@ -46,7 +46,7 @@ A collection of AutoHotkey scripts I actively use on Windows 11, plus some archi
 
 ---
 
-## 📦 Installation  
+## VD Installation  
 
 Some scripts require [VD.AHK](https://github.com/FuPeiJiang/VD.ahk).  
 Simply place the `VD.ahk` folder in the same directory as the scripts below:  
