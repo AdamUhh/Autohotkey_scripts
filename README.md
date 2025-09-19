@@ -11,7 +11,7 @@ A collection of AutoHotkey scripts I actively use on Windows 11, plus some archi
 | `Alt + E` | Open Downloads folder |
 | `Ctrl + Alt + T` | Open Terminal (PowerShell) |
 | `Ctrl + Shift + Alt + M` | Switch audio device *(requires editing script with your own I/O device names)* |
-| `Win + ~` | Switch to another similar window/application |
+| `Alt + ~` | Switch to another similar window/application |
 | `Win + Shift + PageUp/PageDown` | Move active window to another Windows Desktop |
 
 *Note: To switch audio devices, first edit the script and check the DEBUG comment for setup instructions.*
