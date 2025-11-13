@@ -8,13 +8,15 @@ A collection of AutoHotkey scripts I actively use on Windows 11, plus some archi
 
 | Hotkey | Action |
 |--------|---------|
-| `Alt + E` | Open Downloads folder |
+| `Alt + E` | Open Downloads folder (single explorer instance) |
+| `Alt + Shift + E` | Open Downloads folder (new explorer instance) |
 | `Ctrl + Alt + T` | Open Terminal (PowerShell) |
 | `Ctrl + Shift + Alt + M` | Switch audio device *(requires editing script with your own I/O device names)* |
 | `Alt + ~` | Switch to another similar window/application |
 | `Win + Shift + PageUp/PageDown` | Move active window to another Windows Desktop |
 
 *Note: To switch audio devices, first edit the script and check the DEBUG comment for setup instructions.*
+*Note: Single instance downloads folder script will not switch to existing explorer tab if present but inactive.*
 
 ---
 
@@ -22,6 +24,7 @@ A collection of AutoHotkey scripts I actively use on Windows 11, plus some archi
 
 | Hotkey | Action |
 |--------|---------|
+| `Alt + E` | Open Downloads folder (new explorer instance) |
 | `Ctrl + Q` | Close applications (acts like `Alt + F4`, works ~95% of the time :P) |
 | `Middle Click (on title bar)` | Send window/application to the back |
 | `Ctrl + Space` | Media control (toggle pause/unpause) |
