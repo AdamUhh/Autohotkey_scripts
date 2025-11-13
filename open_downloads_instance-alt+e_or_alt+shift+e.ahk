@@ -2,50 +2,88 @@
 #SingleInstance force
 #NoTrayIcon
 
-; Works on windows 11, havent tested for other windows
-; If Explorer has multiple tabs open and Downloads isn't the active one, it brings the window up but won't jump to that tab
+ActivateExistingWindow := true  ; true = activate existing, false = always new
 
-; Configuration
-RestrictToSpecificFolders := true
-ActivateExistingWindow := true  ; Set to true to activate existing window/tab, false to always open new window
-
-; List of allowed folder names (only used when RestrictToSpecificFolders is true)
-AllowedFolderNames := ["Downloads", "Documents"]
-
-; Main hotkey - respects ActivateExistingWindow setting
 !e::OpenExplorer(ActivateExistingWindow)
-
-; Alt+Shift+E - always opens as new window
 !+e::OpenExplorer(false)
 
 OpenExplorer(shouldActivateExisting) {
-    global RestrictToSpecificFolders, AllowedFolderNames
-    
     EnvGet, UserProfile, USERPROFILE
     path := UserProfile . "\Downloads"
-    
-    ; If shouldActivateExisting is false, always open a new window
+
     if (!shouldActivateExisting) {
+        ; Open a new window
         Run, explorer.exe "%path%"
         return
     }
-    
-    ; Only check for existing windows when shouldActivateExisting is true
+
+    ; Try to find an existing explorer window with the path
+    hwnd := FindExplorerWithPath(path)
+    if hwnd {
+        RestoreAndActivate(hwnd)
+        SwitchToTabWithPath(hwnd, path)
+        return
+    }
+
+    ; Fallback: any "Downloads" window
     SetTitleMatchMode, 2
-    if (RestrictToSpecificFolders) {
-        for index, folderName in AllowedFolderNames {
-            if WinExist(folderName " ahk_class CabinetWClass") {
-                WinActivate
+    if WinExist("Downloads ahk_class CabinetWClass") {
+        RestoreAndActivate("A")
+        return
+    }
+
+    ; If none found, open Downloads as new tab
+    Explorer_NewTab(path)
+}
+
+RestoreAndActivate(hwnd) {
+    ; If window is minimized, restore it first
+    WinGet, MinMax, MinMax, ahk_id %hwnd%
+    if (MinMax = -1)
+        WinRestore, ahk_id %hwnd%
+
+    ; Use COM to get the shell window and navigate to same path
+    for window in ComObjCreate("Shell.Application").Windows {
+        if (window.HWND != hwnd)
+            continue
+        try {
+            path := window.Document.Folder.Self.Path
+            window.Navigate2(path)  ; forces Explorer to refresh/focus tab
+        }
+    }
+
+    ; Finally, activate normally
+    WinActivate, ahk_id %hwnd%
+}
+
+FindExplorerWithPath(targetPath) {
+    targetPath := RTrim(targetPath, "\")
+    for window in ComObjCreate("Shell.Application").Windows {
+        if InStr(window.FullName, "explorer.exe") {
+            try windowPath := window.Document.Folder.Self.Path
+            windowPath := RTrim(windowPath, "\")
+            if (windowPath = targetPath)
+                return window.HWND
+        }
+    }
+    return 0
+}
+
+SwitchToTabWithPath(parentHwnd, targetPath) {
+    targetPath := RTrim(targetPath, "\")
+    tabNumber := 0
+
+    for window in ComObjCreate("Shell.Application").Windows {
+        if (window.HWND != parentHwnd)
+            continue
+        try {
+            tabNumber++
+            if (RTrim(window.Document.Folder.Self.Path, "\") = targetPath) {
+                Send, ^%tabNumber%
                 return
             }
         }
-    } else if WinExist("ahk_class CabinetWClass") {
-        WinActivate
-        return
     }
-    
-    ; If none found, open Downloads as new tab
-    Explorer_NewTab(path)
 }
 
 ; Source (author: ntepa): https://www.autohotkey.com/boards/viewtopic.php?t=123320

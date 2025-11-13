@@ -16,7 +16,6 @@ A collection of AutoHotkey scripts I actively use on Windows 11, plus some archi
 | `Win + Shift + PageUp/PageDown` | Move active window to another Windows Desktop |
 
 *Note: To switch audio devices, first edit the script and check the DEBUG comment for setup instructions.*
-*Note: Single instance downloads folder script will not switch to existing explorer tab if present but inactive.*
 
 ---
 
