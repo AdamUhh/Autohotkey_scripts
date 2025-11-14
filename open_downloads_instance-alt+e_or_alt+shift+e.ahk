@@ -10,92 +10,88 @@ ActivateExistingWindow := true  ; true = activate existing, false = always new
 OpenExplorer(shouldActivateExisting) {
     EnvGet, UserProfile, USERPROFILE
     path := UserProfile . "\Downloads"
-
+    
     if (!shouldActivateExisting) {
-        ; Open a new window
         Run, explorer.exe "%path%"
         return
     }
-
-    ; Try to find an existing explorer window with the path
-    hwnd := FindExplorerWithPath(path)
-    if hwnd {
+    
+    ; Try to find existing window with path
+    if (hwnd := FindExplorerWithPath(path)) {
         RestoreAndActivate(hwnd)
         SwitchToTabWithPath(hwnd, path)
         return
     }
-
+    
     ; Fallback: any "Downloads" window
     SetTitleMatchMode, 2
     if WinExist("Downloads ahk_class CabinetWClass") {
-        RestoreAndActivate("A")
+        RestoreAndActivate(WinExist())
         return
     }
-
-    ; If none found, open Downloads as new tab
+    
+    ; Open in new tab or window
     Explorer_NewTab(path)
 }
 
 RestoreAndActivate(hwnd) {
-    ; If window is minimized, restore it first
+    ; Restore if minimized
     WinGet, MinMax, MinMax, ahk_id %hwnd%
     if (MinMax = -1)
         WinRestore, ahk_id %hwnd%
-
-    ; Use COM to get the shell window and navigate to same path
+    
+    ; Refresh/focus tab via COM
     for window in ComObjCreate("Shell.Application").Windows {
-        if (window.HWND != hwnd)
-            continue
-        try {
-            path := window.Document.Folder.Self.Path
-            window.Navigate2(path)  ; forces Explorer to refresh/focus tab
+        if (window.HWND = hwnd) {
+            try window.Navigate2(window.Document.Folder.Self.Path)
+            break
         }
     }
-
-    ; Finally, activate normally
+    
     WinActivate, ahk_id %hwnd%
 }
 
 FindExplorerWithPath(targetPath) {
     targetPath := RTrim(targetPath, "\")
+    
     for window in ComObjCreate("Shell.Application").Windows {
         if InStr(window.FullName, "explorer.exe") {
-            try windowPath := window.Document.Folder.Self.Path
-            windowPath := RTrim(windowPath, "\")
-            if (windowPath = targetPath)
-                return window.HWND
+            try {
+                if (RTrim(window.Document.Folder.Self.Path, "\") = targetPath)
+                    return window.HWND
+            }
         }
     }
     return 0
 }
 
+
 SwitchToTabWithPath(parentHwnd, targetPath) {
     targetPath := RTrim(targetPath, "\")
     tabNumber := 0
-
+    
     for window in ComObjCreate("Shell.Application").Windows {
-        if (window.HWND != parentHwnd)
-            continue
-        try {
-            tabNumber++
-            if (RTrim(window.Document.Folder.Self.Path, "\") = targetPath) {
-                Send, ^%tabNumber%
-                return
+        if (window.HWND = parentHwnd) {
+            try {
+                tabNumber++
+                if (RTrim(window.Document.Folder.Self.Path, "\") = targetPath) {
+                    Send, ^%tabNumber%
+                    return
+                }
             }
         }
     }
 }
 
+
 ; Source (author: ntepa): https://www.autohotkey.com/boards/viewtopic.php?t=123320
 Explorer_NewTab(path) {
-    ExplorerHwnd := WinExist("ahk_class CabinetWClass")
-    
-    if (!ExplorerHwnd) {
+    if (!(ExplorerHwnd := WinExist("ahk_class CabinetWClass"))) {
         Run, explorer.exe "%path%"
         return
     }
     
-    ; Get current count of Explorer windows
+    ; Get current count
     Windows := ComObjCreate("Shell.Application").Windows
     Count := Windows.Count
     
@@ -112,16 +108,14 @@ Explorer_NewTab(path) {
     while (Windows.Count = Count && A_TickCount < timeout)
         Sleep, 10
     
-    ; If new tab created, navigate to path
+    ; Navigate to path if new tab created
     if (Windows.Count > Count) {
         try {
-            Item := Windows.Item(Count)
-            Item.Navigate2(path)
+            Windows.Item(Count).Navigate2(path)
         } catch {
             Run, explorer.exe "%path%"
         }
     } else {
-        ; If failed, open new window
         Run, explorer.exe "%path%"
     }
 }
